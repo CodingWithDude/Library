@@ -11,12 +11,15 @@
   </head>
   <body>
     <div class="addbooks">
+      <div class="errorMsg" id="errorMsg"></div>
       <h1>Title</h1>
       <input type="text" id="title" required />
       <h1>Author</h1>
       <input type="text" id="author" required />
       <h1>Pages</h1>
       <input type="number" id="pages" required />
+      <h1>Read</h1>
+      <input type="checkbox" id="readState" required />
       <button id="submit">Add Book</button>
     </div>
     <div id="bookContainer"></div>

@@ -2,13 +2,13 @@ class Book {
   constructor(
     title = "Unknown",
     author = "Unknown",
-    pages = "0"
-    // readState = false
+    pages = "0",
+    readState = false
   ) {
     this.title = title;
     this.author = author;
     this.pages = pages;
-    // this.readState = readState;
+    this.readState = readState;
   }
 }
 
@@ -18,56 +18,84 @@ class Library {
   }
 
   addBook(newBook) {
-    this.books.push(newBook);
+    if (!this.inLibrary(newBook)) {
+      this.books.push(newBook);
+    }
   }
 
   removeBook(title) {
     this.books = this.books.filter((book) => book.title !== title);
+  }
+
+  getBook(title) {
+    return this.books.find((book) => book.title === title);
+  }
+
+  inLibrary(newBook) {
+    return this.books.some((book) => book.title === newBook.title);
   }
 }
 
 const library = new Library();
 
 // User Interface
-const submit = document.getElementById("submit");
+const submitBtn = document.getElementById("submit");
 const bookContainer = document.getElementById("bookContainer");
+const errorMsg = document.getElementById("errorMsg");
 
 const getBookFromInput = () => {
   const title = document.getElementById("title");
   const author = document.getElementById("author");
   const pages = document.getElementById("pages");
-  const book = new Book(title.value, author.value, pages.value);
-
-  title.value = "";
-  author.value = "";
-  pages.value = "";
+  const readState = document.getElementById("read");
+  const book = new Book(
+    title.value,
+    author.value,
+    pages.value,
+    this.readState.checked
+  );
 
   return book;
 };
 
 const addBook = () => {
   // Toggling .invalidInput for css error highlighting
-  if (title.value === "") {
-    title.classList.add("invalidInput");
+  if (pages.value === "") {
+    pages.classList.add("invalidInput");
+    errorMsg.innerText = "Missing Pages";
   } else {
-    title.classList.remove("invalidInput");
+    pages.classList.remove("invalidInput");
   }
   if (author.value === "") {
     author.classList.add("invalidInput");
+    errorMsg.innerText = "Missing Author";
   } else {
     author.classList.remove("invalidInput");
   }
-  if (pages.value === "") {
-    pages.classList.add("invalidInput");
+  if (title.value === "") {
+    title.classList.add("invalidInput");
+    errorMsg.innerText = "Missing Title";
   } else {
-    pages.classList.remove("invalidInput");
+    title.classList.remove("invalidInput");
   }
   // Adding book
   if (title.value !== "" && author.value !== "" && pages.value !== "") {
     const newBook = getBookFromInput();
-    library.addBook(newBook);
-    updateBookContainer();
-    console.log(library);
+
+    // Check to see if book title is already in library
+    if (library.inLibrary(newBook)) {
+      errorMsg.innerText = `"${title.value}" already in Library`;
+      return;
+    } else {
+      library.addBook(newBook);
+      updateBookContainer();
+
+      // Reset Error Message and Inputs
+      errorMsg.innerText = "";
+      title.value = "";
+      author.value = "";
+      pages.value = "";
+    }
   }
 };
 
@@ -78,7 +106,16 @@ const removeBook = (e) => {
   );
   library.removeBook(title);
   updateBookContainer();
-  console.log(library);
+};
+
+const toggleRead = (e) => {
+  const title = e.target.parentNode.parentNode.firstChild.innerHTML.replaceAll(
+    '"',
+    ""
+  );
+  const book = library.getBook(title);
+  book.readState = !book.readState;
+  updateBookContainer();
 };
 
 const updateBookContainer = () => {
@@ -86,6 +123,7 @@ const updateBookContainer = () => {
   for (let book of library.books) {
     newBookCard(book);
   }
+  console.log(library);
 };
 
 const resetBookContainer = () => {
@@ -99,20 +137,29 @@ const newBookCard = (book) => {
   const pages = document.createElement("p");
   const buttonContainer = document.createElement("div");
   const removeBtn = document.createElement("button");
+  const readBtn = document.createElement("button");
 
   removeBtn.onclick = removeBook;
+  readBtn.onclick = toggleRead;
 
   title.textContent = `"${book.title}"`;
   author.textContent = `${book.author}`;
   pages.textContent = `${book.pages} pages`;
   removeBtn.textContent = "Remove";
 
+  if (book.readState === false) {
+    readBtn.innerText = "Not Read";
+  } else {
+    readBtn.innerHTML = "Read";
+  }
+
   bookCard.appendChild(title);
   bookCard.appendChild(author);
   bookCard.appendChild(pages);
   buttonContainer.appendChild(removeBtn);
+  buttonContainer.appendChild(readBtn);
   bookCard.appendChild(buttonContainer);
   bookContainer.appendChild(bookCard);
 };
 
-submit.onclick = addBook;
+submitBtn.onclick = addBook;
