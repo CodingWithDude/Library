@@ -28,7 +28,7 @@
 
       <!-- Input for new book -->
       <div class="addBooksContainer">
-        <div class="addBooks">
+        <div id="addBooks" class="addBooks collapsible">
           <div class="errorMsg" id="errorMsg"></div>
           <h1>Title</h1>
           <input type="text" id="title" required />
@@ -43,8 +43,8 @@
               <div class="slider round"></div>
             </label>
           </div>
-          <button id="submitBtn" class="submitBtn">Add Book</button>
         </div>
+        <button id="submitBtn" class="submitBtn">Add Book</button>
       </div>
       <!-- Books in Library -->
       <div id="bookContainer" class="bookContainer"></div>

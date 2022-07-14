@@ -56,7 +56,7 @@ body {
 
 .addBooksContainer {
   width: 100vw;
-  display: flex;
+  display: grid;
   background-color: var(--color-bg-accent);
   justify-content: center;
   padding-bottom: 1.3rem;
@@ -75,6 +75,11 @@ body {
   color: var(--color-ff-primary);
   width: min-content;
   background-color: var(--color-bg-accent);
+}
+
+.collapsible {
+  overflow: hidden;
+  height: 0px;
 }
 
 /* Slider Checkbox */
@@ -172,7 +177,7 @@ input[type="number"]:focus {
 
 .submitBtn {
   padding: 0.5rem;
-  margin-top: 0.7rem;
+  margin-top: 1.2rem;
 }
 
 /* Books */
@@ -186,7 +191,7 @@ input[type="number"]:focus {
 }
 
 .bookCard {
-  height: 275px;
+  height: 300px;
   width: minmax(250px, 300px);
   display: grid;
   align-items: center;
@@ -202,11 +207,16 @@ input[type="number"]:focus {
 }
 
 .bookCard p {
+  width: 250px;
+  padding: 0 1rem;
+  word-wrap: wrap;
+  word-break: break-all;
   text-align: center;
 }
 .buttonContainer {
   display: grid;
   grid-auto-flow: row;
+  padding-top: 1rem;
   gap: 1rem;
   justify-content: center;
 }

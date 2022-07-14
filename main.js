@@ -42,12 +42,13 @@ const library = new Library();
 const submitBtn = document.getElementById("submitBtn");
 const bookContainer = document.getElementById("bookContainer");
 const errorMsg = document.getElementById("errorMsg");
+const collapsibleToggle = document.getElementById("addBooks");
 
 const getBookFromInput = () => {
   const title = document.getElementById("title");
   const author = document.getElementById("author");
   const pages = document.getElementById("pages");
-  const readState = document.getElementById("read");
+
   const book = new Book(
     title.value,
     author.value,
@@ -59,26 +60,31 @@ const getBookFromInput = () => {
 };
 
 const addBook = () => {
+  // Toggle collapsible input field
+  collapsibleToggle.classList.remove("collapsible");
   // Toggling .invalidInput for css error highlighting
-  if (pages.value === "") {
-    pages.classList.add("invalidInput");
-    errorMsg.innerText = "Missing Pages";
-  } else {
-    pages.classList.remove("invalidInput");
-  }
-  if (author.value === "") {
-    author.classList.add("invalidInput");
-    errorMsg.innerText = "Missing Author";
-  } else {
-    author.classList.remove("invalidInput");
-  }
-  if (title.value === "") {
-    title.classList.add("invalidInput");
-    errorMsg.innerText = "Missing Title";
-  } else {
-    title.classList.remove("invalidInput");
+  if (collapsibleToggle.classList.contains("errorCheck")) {
+    if (pages.value === "") {
+      pages.classList.add("invalidInput");
+      errorMsg.innerText = "Missing Pages";
+    } else {
+      pages.classList.remove("invalidInput");
+    }
+    if (author.value === "") {
+      author.classList.add("invalidInput");
+      errorMsg.innerText = "Missing Author";
+    } else {
+      author.classList.remove("invalidInput");
+    }
+    if (title.value === "") {
+      title.classList.add("invalidInput");
+      errorMsg.innerText = "Missing Title";
+    } else {
+      title.classList.remove("invalidInput");
+    }
   }
 
+  collapsibleToggle.classList.add("errorCheck");
   // Adding book
   if (title.value !== "" && author.value !== "" && pages.value !== "") {
     const newBook = getBookFromInput();
@@ -86,17 +92,20 @@ const addBook = () => {
     // Check to see if book title is already in library
     if (library.inLibrary(newBook)) {
       errorMsg.innerText = `"${title.value}" already in Library`;
+      title.classList.add("invalidInput");
       return;
     } else {
       library.addBook(newBook);
       updateBookContainer();
 
-      // Reset Error Message and Inputs
+      // Reset Error Message and Inputs and Classes
       errorMsg.innerText = "";
       title.value = "";
       author.value = "";
       pages.value = "";
       readState.checked = false;
+      collapsibleToggle.classList.add("collapsible");
+      collapsibleToggle.classList.remove("errorCheck");
     }
   }
 };
