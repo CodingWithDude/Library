@@ -181,3 +181,19 @@ const newBookCard = (book) => {
 };
 
 submitBtn.onclick = addBook;
+
+// Default Books
+theHobbit = new Book("The Hobbit", "J.R.R. Tolkien", "300", true);
+braveNewWorld = new Book("Brave New World", "Aldous Huxley", "288", false);
+starshipTroopers = new Book(
+  "Starship Troopers",
+  "Robert A. Heinlein",
+  "263",
+  true
+);
+
+library.addBook(theHobbit);
+library.addBook(braveNewWorld);
+library.addBook(starshipTroopers);
+
+updateBookContainer();

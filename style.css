@@ -8,9 +8,9 @@
   /* colors */
   --color-bg-primary: #cbd5e1;
   --color-bg-accent: #f1f5f9;
-  --color-ff-primary: #1e293b;
-  --color-ff-primary: #1e293b;
-  --color-bg-button: #1e293b;
+  --color-ff-primary: #334155;
+
+  --color-bg-button: #334155;
   --color-button: #f8fafc;
   --color-green: #16a34a;
   --color-error: #ef4444;
@@ -197,7 +197,7 @@ input[type="number"]:focus {
   align-items: center;
   justify-content: center;
   border-radius: 10px;
-  font-size: 1.7rem;
+  font-size: 1.5rem;
   background-color: var(--color-bg-accent);
   color: var(--color-ff-primary);
   padding: 1rem 0;
@@ -210,7 +210,6 @@ input[type="number"]:focus {
   width: 250px;
   padding: 0 1rem;
   word-wrap: wrap;
-  word-break: break-all;
   text-align: center;
 }
 .buttonContainer {
@@ -226,13 +225,12 @@ input[type="number"]:focus {
   width: 150px;
   padding: 0.5rem 0;
   border-radius: 10px;
-  font-size: 1.3rem;
 }
 
 .readBtn,
 .removeBtn,
 .submitBtn {
-  font-size: 1.5rem;
+  font-size: 1rem;
   font-weight: var(--fw-bold);
   border-radius: 10px;
   border: none;
@@ -246,6 +244,11 @@ input[type="number"]:focus {
   -webkit-transition: all 0.7s;
   -moz-transition: all 0.7s;
   transition: all 0.7s;
+}
+
+.readBtn {
+  background-color: var(--color-bg-primary);
+  color: var(--color-bg-button);
 }
 
 .read-style {
