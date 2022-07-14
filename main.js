@@ -39,7 +39,7 @@ class Library {
 const library = new Library();
 
 // User Interface
-const submitBtn = document.getElementById("submit");
+const submitBtn = document.getElementById("submitBtn");
 const bookContainer = document.getElementById("bookContainer");
 const errorMsg = document.getElementById("errorMsg");
 
@@ -78,6 +78,7 @@ const addBook = () => {
   } else {
     title.classList.remove("invalidInput");
   }
+
   // Adding book
   if (title.value !== "" && author.value !== "" && pages.value !== "") {
     const newBook = getBookFromInput();
@@ -95,6 +96,7 @@ const addBook = () => {
       title.value = "";
       author.value = "";
       pages.value = "";
+      readState.checked = false;
     }
   }
 };
@@ -139,6 +141,11 @@ const newBookCard = (book) => {
   const removeBtn = document.createElement("button");
   const readBtn = document.createElement("button");
 
+  bookCard.classList.add("bookCard");
+  buttonContainer.classList.add("buttonContainer");
+  removeBtn.classList.add("removeBtn");
+  readBtn.classList.add("readBtn");
+
   removeBtn.onclick = removeBook;
   readBtn.onclick = toggleRead;
 
@@ -149,8 +156,10 @@ const newBookCard = (book) => {
 
   if (book.readState === false) {
     readBtn.innerText = "Not Read";
+    readBtn.classList.remove("read-style");
   } else {
     readBtn.innerHTML = "Read";
+    readBtn.classList.add("read-style");
   }
 
   bookCard.appendChild(title);
